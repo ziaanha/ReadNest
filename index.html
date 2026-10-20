@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fff0f7">
+    <title>ReadNest ♡ Your Reading Corner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="background-decoration decoration-one"></div>
+    <div class="background-decoration decoration-two"></div>
+
+    <header class="topbar">
+        <a class="brand" href="#" aria-label="ReadNest home">
+            <span class="brand-icon">♡</span>
+            <span>ReadNest<span class="brand-dot">.</span></span>
+        </a>
+
+        <div class="topbar-right">
+            <span class="welcome-note">your little reading corner <span>✿</span></span>
+            <button class="add-button" id="openAddModal" type="button">＋ Add a book</button>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <section class="hero">
+            <div class="hero-copy">
+                <span class="eyebrow"><span class="sparkle">✦</span> YOUR PERSONAL LIBRARY</span>
+                <h1>A little more<br> <span>reading,</span> a little more magic.</h1>
+                <p>Keep your favorite stories close and your reading journey blooming. ♡</p>
+                <button class="primary-button" id="heroAddButton" type="button">Add to my bookshelf <span>↗</span></button>
+            </div>
+
+            <div class="hero-art" aria-hidden="true">
+                <div class="hero-orbit orbit-one"></div>
+                <div class="hero-orbit orbit-two"></div>
+                <div class="floating-heart">♥</div>
+                <div class="hero-book-stack">
+                    <div class="stack-book stack-book-one"></div>
+                    <div class="stack-book stack-book-two"></div>
+                    <div class="stack-book stack-book-three"></div>
+                    <div class="stack-book stack-book-four"></div>
+                </div>
+                <div class="hero-flower flower-one">✿</div>
+                <div class="hero-flower flower-two">✿</div>
+                <div class="hero-caption">one page at a time ♡</div>
+            </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Reading statistics">
+            <article class="stat-card">
+                <div class="stat-icon icon-pink">♡</div>
+                <div><p>Total books</p><strong id="totalBooks">0</strong><span>in your little library</span></div>
+            </article>
+            <article class="stat-card">
+                <div class="stat-icon icon-purple">✿</div>
+                <div><p>Completed</p><strong id="completedBooks">0</strong><span>stories treasured</span></div>
+            </article>
+            <article class="stat-card">
+                <div class="stat-icon icon-peach">☁</div>
+                <div><p>Currently reading</p><strong id="readingBooks">0</strong><span>adventures in progress</span></div>
+            </article>
+            <article class="stat-card">
+                <div class="stat-icon icon-blue">✧</div>
+                <div><p>Pages read</p><strong id="pagesRead">0</strong><span>page by page</span></div>
+            </article>
+        </section>
+
+        <section class="library-section" id="library">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">YOUR COLLECTION ♡</span>
+                    <h2>My bookshelf <span class="heading-flower">✿</span></h2>
+                    <p>Every book has a little place here.</p>
+                </div>
+                <button class="outline-button" id="secondAddButton" type="button">＋ New book</button>
+            </div>
+
+            <div class="library-toolbar">
+                <label class="search-box">
+                    <span>⌕</span>
+                    <input type="search" id="searchInput" placeholder="Search title or author..." aria-label="Search books">
+                    <kbd>/</kbd>
+                </label>
+                <label class="filter-label">
+                    <span>Show:</span>
+                    <select id="statusFilter" aria-label="Filter by reading status">
+                        <option value="all">All books</option>
+                        <option value="want">Want to read</option>
+                        <option value="reading">Currently reading</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </label>
+                <label class="filter-label genre-filter">
+                    <span>Genre:</span>
+                    <select id="genreFilter" aria-label="Filter by genre">
+                        <option value="all">All genres</option>
+                        <option>Fantasy</option>
+                        <option>Romance</option>
+                        <option>Mystery</option>
+                        <option>Fiction</option>
+                        <option>Science Fiction</option>
+                        <option>Non-fiction</option>
+                        <option>Thriller</option>
+                        <option>Classic</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="book-grid" id="bookGrid"></div>
+
+            <div class="empty-state" id="emptyState" hidden>
+                <div class="empty-illustration">📚</div>
+                <h3>Your bookshelf is waiting!</h3>
+                <p>Add your first book and start building your cozy little library.</p>
+                <button class="primary-button" id="emptyAddButton" type="button">Add my first book ♡</button>
+            </div>
+
+            <p class="library-footer"><span>♡</span> Made for the love of stories <span>♡</span></p>
+        </section>
+    </main>
+
+    <dialog class="book-dialog" id="bookDialog" aria-labelledby="dialogTitle">
+        <form id="bookForm">
+            <div class="dialog-header">
+                <div>
+                    <span class="eyebrow">A NEW LITTLE ADVENTURE ♡</span>
+                    <h2 id="dialogTitle">Add a book</h2>
+                </div>
+                <button class="close-button" id="closeModal" type="button" aria-label="Close dialog">×</button>
+            </div>
+
+            <input type="hidden" id="bookId">
+
+            <div class="form-grid">
+                <label class="form-field full-width">
+                    <span>Book title <b>*</b></span>
+                    <input id="bookTitle" type="text" maxlength="120" placeholder="What is the book called?" required>
+                </label>
+
+                <label class="form-field full-width">
+                    <span>Author <b>*</b></span>
+                    <input id="bookAuthor" type="text" maxlength="100" placeholder="Who wrote it?" required>
+                </label>
+
+                <label class="form-field full-width">
+                    <span>Book cover image URL</span>
+                    <input id="bookCover" type="url" placeholder="https://example.com/book-cover.jpg">
+                    <small>Paste a direct image URL. Leave blank for a generated cover.</small>
+                </label>
+
+                <label class="form-field">
+                    <span>Genre</span>
+                    <select id="bookGenre">
+                        <option>Fantasy</option>
+                        <option>Romance</option>
+                        <option>Mystery</option>
+                        <option>Fiction</option>
+                        <option>Science Fiction</option>
+                        <option>Non-fiction</option>
+                        <option>Thriller</option>
+                        <option>Classic</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+
+                <label class="form-field">
+                    <span>Reading status</span>
+                    <select id="bookStatus">
+                        <option value="want">Want to read</option>
+                        <option value="reading">Currently reading</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </label>
+
+                <label class="form-field">
+                    <span>Total pages</span>
+                    <input id="totalPages" type="number" min="1" max="100000" placeholder="e.g. 320">
+                </label>
+
+                <label class="form-field">
+                    <span>Pages read</span>
+                    <input id="readPages" type="number" min="0" max="100000" placeholder="e.g. 45" value="0">
+                </label>
+
+                <label class="form-field full-width">
+                    <span>Your rating</span>
+                    <select id="bookRating">
+                        <option value="0">Not rated yet</option>
+                        <option value="1">★☆☆☆☆ — 1 star</option>
+                        <option value="2">★★☆☆☆ — 2 stars</option>
+                        <option value="3">★★★☆☆ — 3 stars</option>
+                        <option value="4">★★★★☆ — 4 stars</option>
+                        <option value="5">★★★★★ — 5 stars</option>
+                    </select>
+                </label>
+            </div>
+
+            <p class="form-error" id="formError" role="alert" hidden></p>
+
+            <div class="dialog-actions">
+                <button class="outline-button" id="cancelModal" type="button">Cancel</button>
+                <button class="primary-button" type="submit" id="saveBookButton">Save book ♡</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog class="delete-dialog" id="deleteDialog" aria-labelledby="deleteTitle">
+        <div class="delete-content">
+            <div class="delete-icon">♡</div>
+            <h2 id="deleteTitle">Remove this book?</h2>
+            <p>It will be removed from your bookshelf.</p>
+            <div class="dialog-actions">
+                <button class="outline-button" id="cancelDelete" type="button">Keep book</button>
+                <button class="danger-button" id="confirmDelete" type="button">Remove book</button>
+            </div>
+        </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
